@@ -1,0 +1,28 @@
+version: '2.2'
+
+services:
+    calculadora_servidor:
+        build:
+            context: ./servidor
+            dockerfile: Dockerfile
+        container_name: calculadora-servidor
+        network_mode: host
+        ports:
+            - "9000:9000"
+        volumes:
+            - ./servidor/calculadoraServidor:/calculadoraServidor
+            - ./calculadoraThrift:/calculadoraThrift
+    
+    calculadora_cliente:
+        build:
+            context: ./cliente
+            dockerfile: Dockerfile
+        container_name: calculadora-cliente
+        network_mode: host
+        ports:
+            - "9000:9000"
+        volumes:
+            - ./cliente/calculadoraCliente:/calculadoraCliente
+            - ./calculadoraThrift:/calculadoraThrift
+        stdin_open: true
+        tty: true
